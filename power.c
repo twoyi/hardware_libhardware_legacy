@@ -71,6 +71,7 @@ open_file_descriptors(const char * const paths[])
 static inline void
 initialize_fds(void)
 {
+#if 0
     // XXX: should be this:
     //pthread_once(&g_initialized, open_file_descriptors);
     // XXX: not this:
@@ -79,11 +80,13 @@ initialize_fds(void)
             open_file_descriptors(OLD_PATHS);
         g_initialized = 1;
     }
+#endif
 }
 
 int
 acquire_wake_lock(int lock, const char* id)
 {
+#if 0
     initialize_fds();
 
 //    ALOGI("acquire_wake_lock lock=%d id='%s'\n", lock, id);
@@ -106,11 +109,15 @@ acquire_wake_lock(int lock, const char* id)
     }
 
     return ret;
+#else
+    return 1;
+#endif
 }
 
 int
 release_wake_lock(const char* id)
 {
+#if 0
     initialize_fds();
 
 //    ALOGI("release_wake_lock id='%s'\n", id);
@@ -122,4 +129,7 @@ release_wake_lock(const char* id)
         return -errno;
     }
     return len;
+#else
+    return 1;
+#endif
 }

@@ -42,6 +42,7 @@ static int fd = -1;
 /* Returns 0 on failure, 1 on success */
 int uevent_init()
 {
+#if 0
     struct sockaddr_nl addr;
     int sz = 64*1024;
     int s;
@@ -64,6 +65,9 @@ int uevent_init()
 
     fd = s;
     return (fd > 0);
+#else
+    return 1;
+#endif
 }
 
 int uevent_get_fd()
@@ -73,6 +77,7 @@ int uevent_get_fd()
 
 int uevent_next_event(char* buffer, int buffer_length)
 {
+#if 0
     while (1) {
         struct pollfd fds;
         int nr;
@@ -95,6 +100,9 @@ int uevent_next_event(char* buffer, int buffer_length)
             } 
         }
     }
+#else
+    while (1) sleep(100000);
+#endif
     
     // won't get here
     return 0;
